@@ -1,8 +1,9 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View, Button, TextInput } from 'react-native'
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { auth } from '../firebase'
+import { authentication } from '../firebase/firebase-config'
+import { signOut } from "firebase/auth";
 
 const HomeScreen = () => {
     const navigation = useNavigation()
@@ -45,19 +46,18 @@ const HomeScreen = () => {
             </View>)
     }
 
-    const handleSignOut = () => {
-        auth
-            .signOut()
-            .then(() => {
+    const signOutUser = () => {
+        signOut(authentication)
+            .then((re) => {
+                console.log("Signed out", re)
                 navigation.replace("Login")
             })
-            .catch(error => alert(error.message))
+            .catch((err) => {
+                console.warn("ERROR", err)
+            })
     }
-
     return (
         <View style={styles.container}>
-            <Text>Email: {auth.currentUser?.email}</Text>
-
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <TextInput
                     style={styles.input}
@@ -90,7 +90,7 @@ const HomeScreen = () => {
             }
 
             <TouchableOpacity
-                onPress={handleSignOut}
+                onPress={signOutUser}
                 style={styles.button}
             >
                 <Text style={styles.buttonText}>Sign out</Text>
