@@ -57,12 +57,21 @@ const HomeScreen = () => {
     return (
         <View style={styles.container}>
             <Text>Email: {auth.currentUser?.email}</Text>
-            <TouchableOpacity
-                onPress={handleSignOut}
-                style={styles.button}
-            >
-                <Text style={styles.buttonText}>Sign out</Text>
-            </TouchableOpacity>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={text => setText(text)}
+                    value={text}
+                    placeholder="Product/EAN Code"
+                />
+                <Button
+                    // onPress={search_function}
+                    style={styles.search_button}
+                    title="Search"
+                    color='#0782F9'
+                />
+            </View>
 
             <View style={styles.barcodebox}>
                 <BarCodeScanner
@@ -71,20 +80,20 @@ const HomeScreen = () => {
             </View>
             <Text style={styles.maintext}>{text}</Text>
 
-            {scanned && <Button title={'Scan again'} onPress={() => setScanned(false)} />}
+            {scanned &&
+                <Button
+                    onPress={() => setScanned(false)}
+                    style={styles.search_button}
+                    title="Scan Again"
+                    color='#0782F9'
+                />
+            }
 
-            {/* <input style={styles.input_box} value={text}></input> */}
-            <TextInput
-                style={styles.input}
-                onChangeText={setText}
-                // value={text}
-                placeholder="Product/EAN Code"
-            />
             <TouchableOpacity
-                // onPress={handleSignOut}
-                style={styles.search_button}
+                onPress={handleSignOut}
+                style={styles.button}
             >
-                <Text style={styles.buttonText}>Search</Text>
+                <Text style={styles.buttonText}>Sign out</Text>
             </TouchableOpacity>
         </View>
     )
@@ -94,9 +103,7 @@ export default HomeScreen
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        flex: 1,
     },
     button: {
         backgroundColor: '#0782F9',
@@ -104,15 +111,6 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 20,
         alignItems: 'center',
-        marginTop: 5,
-    },
-    search_button: {
-        backgroundColor: '#0782F9',
-        width: '30%',
-        padding: 10,
-        borderRadius: 20,
-        alignItems: 'center',
-        marginTop: 5,
     },
     buttonText: {
         color: 'white',
