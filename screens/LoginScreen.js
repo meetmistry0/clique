@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../firebase'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native'
+import { authentication } from '../firebase/firebase-config'
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginScreen = () => {
     const [email, setEmail] = useState('')
@@ -9,47 +10,46 @@ const LoginScreen = () => {
 
     const navigation = useNavigation()
 
-    const handleLogin = () => {
-        auth
-            .signInWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log('Logged in with:', user.email);
+    const signInUser = () => {
+        signInWithEmailAndPassword(authentication, email, password)
+            .then((re) => {
+                console.log("logged in", re)
                 navigation.replace("Home")
             })
-            .catch(error => alert(error.message))
+            .catch((err) => {
+                console.warn("ERROR", err)
+            })
     }
 
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior="padding"
-        >
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={text => setEmail(text)}
-                    style={styles.input}
-                />
-                <TextInput
-                    placeholder="Password"
-                    value={password}
-                    onChangeText={text => setPassword(text)}
-                    style={styles.input}
-                    secureTextEntry
-                />
-            </View>
+        <SafeAreaView style={styles.container}>
+            <KeyboardAvoidingView style={styles.body} behavior="padding">
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        placeholder="Email"
+                        value={email}
+                        onChangeText={text => setEmail(text)}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={text => setPassword(text)}
+                        style={styles.input}
+                        secureTextEntry={true}
+                    />
+                </View>
 
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={handleLogin}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        onPress={signInUser}
+                        style={styles.button}
+                    >
+                        <Text style={styles.buttonText}>Login</Text>
+                    </TouchableOpacity>
+                </View>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
     )
 }
 
@@ -57,6 +57,9 @@ export default LoginScreen
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+    },
+    body: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
