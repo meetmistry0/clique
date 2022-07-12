@@ -1,6 +1,7 @@
-import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, SafeAreaView } from 'react-native'
+import { useNavigation } from '@react-navigation/core';
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { authentication } from '../firebase/firebase-config'
 import { signOut } from "firebase/auth";
@@ -66,6 +67,8 @@ const HomeScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar style="auto" />
+
             <View style={styles.body}>
                 <View style={styles.search_container}>
                     <TextInput
