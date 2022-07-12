@@ -1,6 +1,17 @@
-import { useNavigation } from '@react-navigation/core'
-import React, { useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, SafeAreaView } from 'react-native'
+import { useNavigation } from '@react-navigation/core';
+import { StatusBar } from "expo-status-bar";
+import React, { useState } from 'react';
+import {
+    KeyboardAvoidingView,
+    StyleSheet,
+    Image,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    SafeAreaView,
+    ToastAndroid,
+} from 'react-native'
 import { authentication } from '../firebase/firebase-config'
 import { signInWithEmailAndPassword } from "firebase/auth";
 
@@ -12,43 +23,53 @@ const LoginScreen = () => {
 
     const signInUser = () => {
         signInWithEmailAndPassword(authentication, email, password)
-            .then((re) => {
-                console.log("logged in", re)
+            .then((res) => {
+                console.log(res)
                 navigation.replace("Home")
             })
-            .catch((err) => {
-                console.warn("ERROR", err)
+            .catch((error) => {
+                console.log(error)
+                if (error.code === 'auth/wrong-password') {
+                    ToastAndroid.show("Wrong password entered!", ToastAndroid.SHORT);
+                }
+                if (error.code === 'auth/user-not-found') {
+                    ToastAndroid.show("Wrong email entered!", ToastAndroid.SHORT);
+                }
             })
     }
 
     return (
         <SafeAreaView style={styles.container}>
-            <KeyboardAvoidingView style={styles.body} behavior="padding">
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        placeholder="Email"
-                        value={email}
-                        onChangeText={text => setEmail(text)}
-                        style={styles.input}
-                    />
-                    <TextInput
-                        placeholder="Password"
-                        value={password}
-                        onChangeText={text => setPassword(text)}
-                        style={styles.input}
-                        secureTextEntry={true}
-                    />
-                </View>
+            <Image style={styles.image} source={require("../assets/clique_logo.jpg")} />
 
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity
-                        onPress={signInUser}
-                        style={styles.button}
-                    >
-                        <Text style={styles.buttonText}>Login</Text>
-                    </TouchableOpacity>
-                </View>
-            </KeyboardAvoidingView>
+            <StatusBar style="auto" />
+
+            {/* <KeyboardAvoidingView behavior="padding"> */}
+            <View style={styles.inputView}>
+                <TextInput
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                    style={styles.loginInput}
+                />
+            </View>
+
+            <View style={styles.inputView}>
+                <TextInput
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={text => setPassword(text)}
+                    style={styles.loginInput}
+                    secureTextEntry={true}
+                />
+            </View>
+            {/* </KeyboardAvoidingView> */}
+
+            <TouchableOpacity
+                style={styles.loginBtn}
+                onPress={signInUser} >
+                <Text style={styles.loginText}>LOGIN</Text>
+            </TouchableOpacity>
         </SafeAreaView>
     )
 }
@@ -58,48 +79,40 @@ export default LoginScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        alignItems: "center",
     },
-    body: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+
+    image: {
+        marginTop: 100,
+        marginBottom: 80,
     },
-    inputContainer: {
-        width: '80%'
+
+
+    inputView: {
+        width: "80%",
     },
-    input: {
-        backgroundColor: 'white',
-        paddingHorizontal: 15,
+
+    loginInput: {
+        marginTop: 12,
+        paddingHorizontal: 14,
         paddingVertical: 10,
+        borderWidth: 1.2,
         borderRadius: 10,
-        marginTop: 10,
+        borderColor: '#d1d5db',
     },
-    buttonContainer: {
+
+    loginBtn: {
+        marginTop: 20,
+        backgroundColor: '#4bb1b6',
         width: '50%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 30,
-    },
-    button: {
-        backgroundColor: '#0782F9',
-        width: '100%',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
+        justifyContent: "center",
     },
-    buttonOutline: {
-        backgroundColor: 'white',
-        marginTop: 5,
-        borderColor: '#0782F9',
-        borderWidth: 2,
-    },
-    buttonText: {
+
+    loginText: {
         color: 'white',
-        fontWeight: '700',
-        fontSize: 16,
-    },
-    buttonOutlineText: {
-        color: '#0782F9',
         fontWeight: '700',
         fontSize: 16,
     },
