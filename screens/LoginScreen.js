@@ -40,7 +40,7 @@ const LoginScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Image style={styles.image} source={require("../assets/clique_logo.jpg")} />
+            <Image style={styles.image} source={require("../assets/clique_logo.png")} />
 
             <StatusBar style="auto" />
 
