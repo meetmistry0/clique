@@ -74,7 +74,7 @@ const HomeScreen = () => {
                     style={styles.searchInput}
                     onChangeText={text => setText(text)}
                     value={text}
-                    placeholder="Product/EAN Code"
+                    placeholder="Enter Product/EAN Code"
                 />
                 <TouchableOpacity
                     onPress={onSearchClick}
@@ -84,12 +84,14 @@ const HomeScreen = () => {
                 </TouchableOpacity>
             </View>
 
+            <Text style={styles.scanCodeText}>Scan Barcode</Text>
+
             <View style={styles.barcodeBox}>
                 <BarCodeScanner
                     onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                     style={{ height: 610, width: 340 }} />
             </View>
-            <Text style={styles.mainText}>Code: {text}</Text>
+            <Text style={styles.mainText}>{text}</Text>
 
             {scanned &&
                 <Button
@@ -148,6 +150,13 @@ const styles = StyleSheet.create({
     searchButtonText: {
         color: 'white',
         fontWeight: '600',
+    },
+
+    scanCodeText: {
+        alignSelf: 'center',
+        fontSize: 20,
+        fontWeight: '600',
+        padding: 8,
     },
 
     barcodeBox: {
