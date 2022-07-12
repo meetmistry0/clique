@@ -69,45 +69,43 @@ const HomeScreen = () => {
         <SafeAreaView style={styles.container}>
             <StatusBar style="auto" />
 
-            <View style={styles.body}>
-                <View style={styles.searchContainer}>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={text => setText(text)}
-                        value={text}
-                        placeholder="Product/EAN Code"
-                    />
-                    <TouchableOpacity
-                        onPress={onSearchClick}
-                        style={styles.button}
-                    >
-                        <Text style={styles.buttonText}>Search</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.barcodeBox}>
-                    <BarCodeScanner
-                        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                        style={{ height: 610, width: 340 }} />
-                </View>
-                <Text style={styles.mainText}>{text}</Text>
-
-                {scanned &&
-                    <Button
-                        onPress={() => setScanned(false)}
-                        style={styles.searchButton}
-                        title="Scan Again"
-                        color='#0782F9'
-                    />
-                }
-
+            <View style={styles.searchContainer}>
+                <TextInput
+                    style={styles.searchInput}
+                    onChangeText={text => setText(text)}
+                    value={text}
+                    placeholder="Product/EAN Code"
+                />
                 <TouchableOpacity
-                    onPress={signOutUser}
-                    style={styles.button}
+                    onPress={onSearchClick}
+                    style={styles.searchButton}
                 >
-                    <Text style={styles.buttonText}>Sign out</Text>
+                    <Text style={styles.searchButtonText}>Search</Text>
                 </TouchableOpacity>
             </View>
+
+            <View style={styles.barcodeBox}>
+                <BarCodeScanner
+                    onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                    style={{ height: 610, width: 340 }} />
+            </View>
+            <Text style={styles.mainText}>Code: {text}</Text>
+
+            {scanned &&
+                <Button
+                    onPress={() => setScanned(false)}
+                    style={styles.searchButton}
+                    title="Scan Again"
+                    color='#0782F9'
+                />
+            }
+
+            <TouchableOpacity
+                onPress={signOutUser}
+                style={styles.logoutButton}
+            >
+                <Text style={styles.logoutButtonText}>Sign out</Text>
+            </TouchableOpacity>
         </SafeAreaView>
     )
 }
@@ -118,44 +116,44 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    body: {
-        flex: 1,
-        // alignItems: 'center',
-    },
 
     searchContainer: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        padding: 12,
+    },
+
+    searchInput: {
+        backgroundColor: 'white',
+        minWidth: '66%',
+        paddingHorizontal: 14,
+        paddingVertical: 10,
+        borderRadius: 12,
+        marginTop: 12,
+        marginBottom: 12,
     },
 
     searchButton: {
+        marginTop: 12,
+        marginBottom: 12,
+        backgroundColor: '#4bb1b6',
+        width: '24%',
+        borderRadius: 12,
+        height: 48,
         alignItems: 'center',
-        backgroundColor: '#0782F9',
-        padding: 8,
-        borderRadius: 18,
+        justifyContent: "center",
     },
 
-    button: {
-        backgroundColor: '#0782F9',
-        width: '40%',
-        padding: 10,
-        borderRadius: 20,
-        alignItems: 'center',
-    },
-
-    buttonText: {
+    searchButtonText: {
         color: 'white',
-        fontWeight: '700',
-        fontSize: 16,
-    },
-
-    mainText: {
-        fontSize: 16,
-        margin: 18,
+        fontWeight: '600',
     },
 
     barcodeBox: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
         height: 340,
@@ -165,11 +163,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    input: {
-        backgroundColor: 'white',
-        minWidth: '60%',
-        paddingHorizontal: 15,
-        paddingVertical: 10,
-        borderRadius: 10,
+    mainText: {
+        alignSelf: 'center',
+        fontSize: 16,
+        fontWeight: '500',
+        margin: 18,
+    },
+
+    logoutButton: {
+        marginTop: 20,
+        backgroundColor: '#c23a22',
+        width: '30%',
+        padding: 14,
+        borderRadius: 12,
+        alignSelf: 'center',
+        alignItems: 'center',
+    },
+
+    logoutButtonText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
     },
 })
