@@ -36,13 +36,13 @@ const HomeScreen = () => {
     if (hasPermission === null) {
         return (
             <View style={styles.container}>
-                <Text>Requesting for camera permission</Text>
+                <Text>Requesting permission for camera access...</Text>
             </View>)
     }
     if (hasPermission === false) {
         return (
             <View style={styles.container}>
-                <Text style={{ margin: 10 }}>No access to camera</Text>
+                <Text style={{ margin: 10 }}>No access provided to camera. Please check your permissions.</Text>
                 <Button title={'Allow Camera'} onPress={() => askForCameraPermission()} />
             </View>)
     }
@@ -70,7 +70,7 @@ const HomeScreen = () => {
             <StatusBar style="auto" />
 
             <View style={styles.body}>
-                <View style={styles.search_container}>
+                <View style={styles.searchContainer}>
                     <TextInput
                         style={styles.input}
                         onChangeText={text => setText(text)}
@@ -85,17 +85,17 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.barcodebox}>
+                <View style={styles.barcodeBox}>
                     <BarCodeScanner
                         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                         style={{ height: 610, width: 340 }} />
                 </View>
-                <Text style={styles.maintext}>{text}</Text>
+                <Text style={styles.mainText}>{text}</Text>
 
                 {scanned &&
                     <Button
                         onPress={() => setScanned(false)}
-                        style={styles.search_button}
+                        style={styles.searchButton}
                         title="Scan Again"
                         color='#0782F9'
                     />
@@ -123,13 +123,13 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
     },
 
-    search_container: {
+    searchContainer: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around'
     },
 
-    search_button: {
+    searchButton: {
         alignItems: 'center',
         backgroundColor: '#0782F9',
         padding: 8,
@@ -150,12 +150,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 
-    maintext: {
+    mainText: {
         fontSize: 16,
         margin: 18,
     },
 
-    barcodebox: {
+    barcodeBox: {
         alignItems: 'center',
         justifyContent: 'center',
         height: 340,
