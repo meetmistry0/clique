@@ -1,10 +1,20 @@
 import { useNavigation } from '@react-navigation/core';
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Button,
+    TextInput,
+    TouchableOpacity,
+    SafeAreaView
+} from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { authentication } from '../firebase/firebase-config'
 import { signOut } from "firebase/auth";
+import { collection, doc, getDocs, getDoc } from 'firebase/firestore/lite'
+import { db } from '../firebase/firebase-config';
 
 const HomeScreen = () => {
     const navigation = useNavigation()
@@ -29,7 +39,6 @@ const HomeScreen = () => {
     const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
         setText(data)
-        console.log('Type: ' + type + '\nData: ' + data)
     };
 
     // Check permissions and return the screens
@@ -54,16 +63,28 @@ const HomeScreen = () => {
                 navigation.replace("Login")
             })
             .catch((err) => {
-                console.warn("ERROR", err)
+                console.log("ERROR", err)
             })
     }
 
 
-    // GO TO THE NEXT SCREEN WHICH SHOWS DATA WITH THIS FUNCTION
-    const onSearchClick = () => {
-        navigation.replace("Data")
-    }
+    const GetData = async () => {
+        // const itemMasterCol = collection(db, 'item_master')
+        // const itemMasterSnapshot = await getDocs(itemMasterCol)
+        // const itemMasterList = itemMasterSnapshot.docs.map(doc => doc.data());
 
+        // console.log(itemMasterList)
+
+        const itemMasterRef = doc(db, "item_master", `${text}`);
+        const itemMasterSnap = await getDoc(itemMasterRef);
+
+        if (itemMasterSnap.exists()) {
+            console.log("Document data:", itemMasterSnap.data());
+            navigation.navigate('Data');
+        } else {
+            console.log("No such document!");
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -77,7 +98,7 @@ const HomeScreen = () => {
                     placeholder="Enter Product/EAN Code"
                 />
                 <TouchableOpacity
-                    onPress={onSearchClick}
+                    onPress={GetData}
                     style={styles.searchButton}
                 >
                     <Text style={styles.searchButtonText}>Search</Text>
@@ -98,7 +119,6 @@ const HomeScreen = () => {
                     onPress={() => setScanned(false)}
                     style={styles.searchButton}
                     title="Scan Again"
-                    color='#0782F9'
                 />
             }
 
