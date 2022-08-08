@@ -21,7 +21,7 @@ const HomeScreen = () => {
 
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
-    const [text, setText] = useState('');
+    const [text, setCode] = useState('');
 
     const askForCameraPermission = () => {
         (async () => {
@@ -38,7 +38,7 @@ const HomeScreen = () => {
     // What happens when we scan the bar code
     const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
-        setText(data)
+        setCode(data)
     };
 
     // Check permissions and return the screens
@@ -93,7 +93,7 @@ const HomeScreen = () => {
             <View style={styles.searchContainer}>
                 <TextInput
                     style={styles.searchInput}
-                    onChangeText={text => setText(text)}
+                    onChangeText={text => setCode(text)}
                     value={text}
                     placeholder="Enter Product/EAN Code"
                 />

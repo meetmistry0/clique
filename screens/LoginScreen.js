@@ -2,7 +2,6 @@ import { useNavigation } from '@react-navigation/core';
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from 'react';
 import {
-    KeyboardAvoidingView,
     StyleSheet,
     Image,
     Text,
@@ -44,7 +43,6 @@ const LoginScreen = () => {
 
             <StatusBar style="auto" />
 
-            {/* <KeyboardAvoidingView behavior="padding"> */}
             <View style={styles.inputView}>
                 <TextInput
                     placeholder="Email"
@@ -63,7 +61,6 @@ const LoginScreen = () => {
                     secureTextEntry={true}
                 />
             </View>
-            {/* </KeyboardAvoidingView> */}
 
             <TouchableOpacity
                 style={styles.loginBtn}
