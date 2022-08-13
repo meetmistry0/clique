@@ -8,7 +8,8 @@ import {
     Button,
     TextInput,
     TouchableOpacity,
-    SafeAreaView
+    SafeAreaView,
+    ToastAndroid,
 } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { authentication } from '../firebase/firebase-config'
@@ -58,8 +59,7 @@ const HomeScreen = () => {
 
     const signOutUser = () => {
         signOut(authentication)
-            .then((re) => {
-                console.log("Signed out", re)
+            .then(() => {
                 navigation.replace("Login")
             })
             .catch((err) => {
@@ -69,20 +69,16 @@ const HomeScreen = () => {
 
 
     const GetData = async () => {
-        // const itemMasterCol = collection(db, 'item_master')
-        // const itemMasterSnapshot = await getDocs(itemMasterCol)
-        // const itemMasterList = itemMasterSnapshot.docs.map(doc => doc.data());
-
-        // console.log(itemMasterList)
-
         const itemMasterRef = doc(db, "item_master", `${text}`);
         const itemMasterSnap = await getDoc(itemMasterRef);
 
         if (itemMasterSnap.exists()) {
             console.log("Document data:", itemMasterSnap.data());
-            navigation.navigate('Data');
+            navigation.navigate('Data', {
+                itemId: `${text}`
+            });
         } else {
-            console.log("No such document!");
+            ToastAndroid.show("No such product!", ToastAndroid.SHORT);
         }
     }
 
