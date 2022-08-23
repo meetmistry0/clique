@@ -73,7 +73,7 @@ const HomeScreen = () => {
         const itemMasterSnap = await getDoc(itemMasterRef);
 
         if (itemMasterSnap.exists()) {
-            console.log("Document data:", itemMasterSnap.data());
+            // console.log("Document data:", itemMasterSnap.data());
             navigation.navigate('Data', {
                 itemId: `${text}`
             });
