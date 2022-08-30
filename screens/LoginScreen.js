@@ -23,7 +23,7 @@ const LoginScreen = () => {
     const signInUser = () => {
         signInWithEmailAndPassword(authentication, email, password)
             .then((res) => {
-                console.log(res)
+                // console.log(res)
                 navigation.replace("Home")
             })
             .catch((error) => {
