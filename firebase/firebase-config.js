@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { initializeAuth } from 'firebase/auth/react-native';
 import { getFirestore } from "firebase/firestore/lite";
 
 // Your web app's Firebase configuration
@@ -15,5 +15,5 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const authentication = getAuth(app);
+export const authentication = initializeAuth(app);
 export const db = getFirestore(app);
