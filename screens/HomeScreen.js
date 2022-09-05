@@ -68,7 +68,7 @@ const HomeScreen = () => {
     }
 
 
-    const GetData = async () => {
+    async function GetData() {
         const itemMasterRef = doc(db, "item_master", `${text}`);
         const itemMasterSnap = await getDoc(itemMasterRef);
 
