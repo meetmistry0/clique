@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/clique_logo.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.meet_mistry.clique"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8b5b9ce5-65c9-46b0-8c0c-5ec3511f184d"
+      }
     }
   }
 }
