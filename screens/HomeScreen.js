@@ -113,7 +113,7 @@ const HomeScreen = () => {
                 <TouchableOpacity
                     onPress={() => setScanned(false)}
                     style={styles.searchAgainButton}>
-                    <Text style={styles.searchAgainText}>Search Again</Text>
+                    <Text style={styles.searchAgainText}>Scan Again</Text>
                 </TouchableOpacity>
             }
 
