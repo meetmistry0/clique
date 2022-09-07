@@ -22,17 +22,16 @@ const LoginScreen = () => {
 
     const signInUser = () => {
         signInWithEmailAndPassword(authentication, email, password)
-            .then((res) => {
-                // console.log(res)
+            .then(() => {
                 navigation.replace("Product Search")
             })
             .catch((error) => {
-                console.log(error)
-                if (error.code === 'auth/wrong-password') {
-                    ToastAndroid.show("Wrong password entered!", ToastAndroid.SHORT);
-                }
+                // console.log(error)
                 if (error.code === 'auth/user-not-found') {
                     ToastAndroid.show("Wrong email entered!", ToastAndroid.SHORT);
+                }
+                if (error.code === 'auth/wrong-password') {
+                    ToastAndroid.show("Wrong password entered!", ToastAndroid.SHORT);
                 }
             })
     }
