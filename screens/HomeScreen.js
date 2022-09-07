@@ -108,14 +108,13 @@ const HomeScreen = () => {
                     onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                     style={{ height: 610, width: 340 }} />
             </View>
-            <Text style={styles.mainText}>{text}</Text>
 
             {scanned &&
-                <Button
+                <TouchableOpacity
                     onPress={() => setScanned(false)}
-                    style={styles.searchButton}
-                    title="Scan Again"
-                />
+                    style={styles.searchAgainButton}>
+                    <Text style={styles.searchAgainText}>Search Again</Text>
+                </TouchableOpacity>
             }
 
             <TouchableOpacity
@@ -210,4 +209,19 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
     },
+
+    searchAgainButton: {
+        marginTop: 20,
+        backgroundColor: '#ffc107',
+        padding: 16,
+        borderRadius: 12,
+        alignSelf: 'center',
+    },
+
+    searchAgainText: {
+        color: 'black',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+
 })
