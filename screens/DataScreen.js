@@ -6,6 +6,7 @@ import {
     Text,
     View,
     SafeAreaView,
+    ToastAndroid,
 } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore/lite'
 import { db } from '../firebase/firebase-config';
@@ -13,6 +14,8 @@ import { useIsFocused } from '@react-navigation/native';
 
 const DataScreen = () => {
     const [itemName, setItemName] = useState('');
+    const [itemNo, setItemNo] = useState('');
+    const [itemBarcode, setItemBarcode] = useState('');
 
     const route = useRoute();
     let itemID = route.params.itemId
@@ -24,8 +27,9 @@ const DataScreen = () => {
             const itemData = await getDoc(itemRef);
 
             if (itemData.exists()) {
-                console.log(itemData.data());
-                setItemName('got the data')
+                setItemName(itemData.data().art_desc);
+                setItemNo(itemData.data().art_no);
+                setItemBarcode(itemData.data().barcode);
             }
             else {
                 alert("Item Does Not Exist")
@@ -50,9 +54,9 @@ const DataScreen = () => {
         <SafeAreaView style={styles.container}>
             <StatusBar style="auto" />
             <View>
-                <Text>DataScreen</Text>
-                <Text>{itemID}</Text>
-                <Text>{itemName}</Text>
+                <Text style={styles.headerText}>{itemName}</Text>
+                <Text>Item Number: {itemNo}</Text>
+                <Text>Item Barcode: {itemBarcode}</Text>
             </View>
         </SafeAreaView>
     )
@@ -63,5 +67,12 @@ export default DataScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+
+    headerText: {
+        alignSelf: 'center',
+        fontSize: 20,
+        fontWeight: '600',
+        margin: 18,
     },
 })
