@@ -14,7 +14,7 @@ import {
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { authentication } from '../firebase/firebase-config'
 import { signOut } from "firebase/auth";
-import { collection, doc, getDocs, getDoc } from 'firebase/firestore/lite'
+import { doc, getDoc } from 'firebase/firestore/lite'
 import { db } from '../firebase/firebase-config';
 
 const HomeScreen = () => {
@@ -37,7 +37,7 @@ const HomeScreen = () => {
     }, []);
 
     // What happens when we scan the bar code
-    const handleBarCodeScanned = ({ type, data }) => {
+    const handleBarCodeScanned = ({ data }) => {
         setScanned(true);
         setCode(data)
     };
@@ -52,7 +52,7 @@ const HomeScreen = () => {
     if (hasPermission === false) {
         return (
             <View style={styles.container}>
-                <Text style={{ margin: 10 }}>No access provided to camera. Please check your permissions.</Text>
+                <Text style={{ margin: 10 }}>Camera access is not provided. Please check the app permissions.</Text>
                 <Button title={'Allow Camera'} onPress={() => askForCameraPermission()} />
             </View>)
     }
@@ -74,7 +74,7 @@ const HomeScreen = () => {
 
         if (itemMasterSnap.exists()) {
             // console.log("Document data:", itemMasterSnap.data());
-            navigation.navigate('Data', {
+            navigation.navigate('Product Details', {
                 itemId: `${text}`
             });
         } else {
@@ -190,8 +190,8 @@ const styles = StyleSheet.create({
 
     mainText: {
         alignSelf: 'center',
-        fontSize: 16,
-        fontWeight: '500',
+        fontSize: 20,
+        fontWeight: '600',
         margin: 18,
     },
 

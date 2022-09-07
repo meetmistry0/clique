@@ -24,7 +24,7 @@ const LoginScreen = () => {
         signInWithEmailAndPassword(authentication, email, password)
             .then((res) => {
                 // console.log(res)
-                navigation.replace("Home")
+                navigation.replace("Product Search")
             })
             .catch((error) => {
                 console.log(error)
