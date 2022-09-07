@@ -16,8 +16,11 @@ import { useIsFocused } from '@react-navigation/native';
 
 const DataScreen = () => {
     const [itemName, setItemName] = useState('');
-    const [itemNo, setItemNo] = useState('');
+    const [itemArticle, setItemArticle] = useState('');
     const [itemBarcode, setItemBarcode] = useState('');
+    const [itemColor, setItemColor] = useState('');
+    const [itemMcCode, setItemMcCode] = useState('');
+    const [itemYear, setItemYear] = useState('');
 
     const route = useRoute();
     let itemID = route.params.itemId
@@ -36,8 +39,11 @@ const DataScreen = () => {
 
             if (itemData.exists()) {
                 setItemName(itemData.data().art_desc);
-                setItemNo(itemData.data().art_no);
+                setItemArticle(itemData.data().art_no);
                 setItemBarcode(itemData.data().barcode);
+                setItemColor(itemData.data().color);
+                setItemMcCode(itemData.data().mc_code);
+                setItemYear(itemData.data().season_year);
             }
             else {
                 alert("Item Does Not Exist")
@@ -63,8 +69,11 @@ const DataScreen = () => {
             <StatusBar style="auto" />
             <View>
                 <Text style={styles.headerText}>{itemName}</Text>
-                <Text>Item Number: {itemNo}</Text>
-                <Text>Item Barcode: {itemBarcode}</Text>
+                <Text>Article: {itemArticle}</Text>
+                <Text>Barcode: {itemBarcode}</Text>
+                <Text>Color: {itemColor}</Text>
+                <Text>MC Code: {itemMcCode}</Text>
+                <Text>Season Year: {itemYear}</Text>
                 <TouchableOpacity
                     style={styles.productURLButton}
                     onPress={() => OpenURLButton()}
