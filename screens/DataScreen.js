@@ -7,6 +7,8 @@ import {
     View,
     SafeAreaView,
     ToastAndroid,
+    Linking,
+    TouchableOpacity
 } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore/lite'
 import { db } from '../firebase/firebase-config';
@@ -19,6 +21,12 @@ const DataScreen = () => {
 
     const route = useRoute();
     let itemID = route.params.itemId
+
+    const itemURL = "https://www.pantaloons.com/c/search?search_query=" + itemID;
+
+    const OpenURLButton = () => {
+        Linking.openURL(itemURL);
+    };
 
     async function loadData() {
         const itemRef = doc(db, "item_master", itemID);
@@ -57,6 +65,12 @@ const DataScreen = () => {
                 <Text style={styles.headerText}>{itemName}</Text>
                 <Text>Item Number: {itemNo}</Text>
                 <Text>Item Barcode: {itemBarcode}</Text>
+                <TouchableOpacity
+                    style={styles.productURLButton}
+                    onPress={() => OpenURLButton()}
+                >
+                    <Text style={styles.productURLText}>View in pantaloons.com</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
@@ -74,5 +88,19 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '600',
         margin: 18,
+    },
+
+    productURLButton: {
+        margin: 20,
+        backgroundColor: '#4bb1b6',
+        padding: 12,
+        borderRadius: 12,
+        alignSelf: 'center',
+    },
+
+    productURLText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
     },
 })
