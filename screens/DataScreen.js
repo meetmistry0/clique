@@ -69,11 +69,11 @@ const DataScreen = () => {
             <StatusBar style="auto" />
             <View>
                 <Text style={styles.headerText}>{itemName}</Text>
-                <Text>Article: {itemArticle}</Text>
-                <Text>Barcode: {itemBarcode}</Text>
-                <Text>Color: {itemColor}</Text>
-                <Text>MC Code: {itemMcCode}</Text>
-                <Text>Season Year: {itemYear}</Text>
+                <Text style={styles.subText}>Article: {itemArticle}</Text>
+                <Text style={styles.subText}>Barcode: {itemBarcode}</Text>
+                <Text style={styles.subText}>Color: {itemColor}</Text>
+                <Text style={styles.subText}>MC Code: {itemMcCode}</Text>
+                <Text style={styles.subText}>Season Year: {itemYear}</Text>
                 <TouchableOpacity
                     style={styles.productURLButton}
                     onPress={() => OpenURLButton()}
@@ -97,6 +97,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '600',
         margin: 18,
+    },
+
+    subText: {
+        alignSelf: 'flex-start',
+        fontSize: 16,
+        fontWeight: '500',
+        margin: 8,
     },
 
     productURLButton: {
