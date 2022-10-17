@@ -8,11 +8,13 @@ import {
     SafeAreaView,
     ToastAndroid,
     Linking,
-    TouchableOpacity
+    TouchableOpacity,
+    Image
 } from 'react-native';
 import { doc, getDoc } from 'firebase/firestore/lite'
 import { db } from '../firebase/firebase-config';
 import { useIsFocused } from '@react-navigation/native';
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 
 const DataScreen = () => {
     const [itemName, setItemName] = useState('');
@@ -21,6 +23,8 @@ const DataScreen = () => {
     const [itemColor, setItemColor] = useState('');
     const [itemMcCode, setItemMcCode] = useState('');
     const [itemYear, setItemYear] = useState('');
+
+    const [url, setUrl] = useState();
 
     const route = useRoute();
     let itemID = route.params.itemId
@@ -61,6 +65,16 @@ const DataScreen = () => {
             // alert('In isFocused', isFocused);
             loadData();
         }
+
+        const image_func = async () => {
+            const storage = getStorage();
+            const reference = ref(storage, '/1.jpg');
+            await getDownloadURL(reference).then((x) => {
+                setUrl(x);
+            });
+        }
+
+        image_func();
     }, [isFocused]);
 
 
@@ -69,6 +83,9 @@ const DataScreen = () => {
             <StatusBar style="auto" />
             <View>
                 <Text style={styles.headerText}>{itemName}</Text>
+                <Image style={styles.productImage}
+                    source={{ uri: url }}
+                />
                 <Text style={styles.subText}>Article: {itemArticle}</Text>
                 <Text style={styles.subText}>Barcode: {itemBarcode}</Text>
                 <Text style={styles.subText}>Color: {itemColor}</Text>
@@ -104,6 +121,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '500',
         margin: 8,
+        marginLeft: 26,
     },
 
     productURLButton: {
@@ -119,4 +137,13 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 16,
     },
+
+    productImage: {
+        width: '45%',
+        height: '45%',
+        padding: 2,
+        margin: 12,
+        borderRadius: 12,
+        alignSelf: 'center',
+    }
 })
